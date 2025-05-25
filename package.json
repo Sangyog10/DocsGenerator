@@ -1,0 +1,80 @@
+{
+  "name": "api-doc-generator",
+  "displayName": "AI API Documentation Generator",
+  "description": "Generate professional API documentation from selected files using AI",
+  "version": "1.0.0",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "apiDocGenerator.generateDocs",
+        "title": "Generate API Documentation",
+        "category": "API Docs"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "apiDocGenerator.generateDocs",
+          "when": "explorerResourceIsFolder || resourceExtname == .js || resourceExtname == .ts || resourceExtname == .py || resourceExtname == .java || resourceExtname == .cs",
+          "group": "navigation"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "API Documentation Generator",
+      "properties": {
+        "apiDocGenerator.aiProvider": {
+          "type": "string",
+          "default": "openai",
+          "enum": [
+            "openai",
+            "anthropic",
+            "custom"
+          ],
+          "description": "AI provider to use for documentation generation"
+        },
+        "apiDocGenerator.apiKey": {
+          "type": "string",
+          "default": "",
+          "description": "API key for the selected AI provider"
+        },
+        "apiDocGenerator.outputFormat": {
+          "type": "string",
+          "default": "markdown",
+          "enum": [
+            "markdown",
+            "html",
+            "json"
+          ],
+          "description": "Output format for generated documentation"
+        },
+        "apiDocGenerator.includeExamples": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include code examples in generated documentation"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/node": "^16.18.126",
+    "@types/vscode": "^1.100.0",
+    "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "axios": "^1.9.0"
+  }
+}
